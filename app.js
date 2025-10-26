@@ -158,7 +158,7 @@ app.post("/ticket", requiresAuth(), async (req, res) => {
       "INSERT INTO tickets (id, national_id, numbers, round_id) VALUES ($1, $2, $3, $4)",
       [ticketId, national_id, numbers, round.id]
     );
-    // dio za generiranje slike qr koda (tu mi je chatGPT puno pomagao, i za ovaj dio i za onaj u buy.ejs)
+    // dio za generiranje slike qr koda (tu mi je chatGPT puno pomagao, i za ovaj dio i za onaj u buy.ejs takoder)
     const base = process.env.BASE_URL || `${req.protocol}://${req.get("host")}`;
     const ticketUrl = `${base.replace(/\/$/, "")}/ticket/${ticketId}`;
     const qrImage = await QRCode.toBuffer(ticketUrl);
