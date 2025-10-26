@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="hr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Uplata listića</title>
+    <style>
+      body {
+        background: #ccd6ff;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+      }
+      h2 {
+        color: #a0036e;
+        margin-bottom: 1.2rem;
+      }
+      p {
+        margin: 0.8rem 0;
+        line-height: 1.5;
+      }
+      strong {
+        color: black;
+      }
+      label {
+        display: block;
+        margin: 1rem 0;
+        font-weight: bold;
+        color: black;
+      }
+      input {
+        margin-top: 0.4rem;
+        padding: 0.5rem;
+        border: 1px solid lightgrey;
+        border-radius: 6px;
+        width: 100%;
+        max-width: 300px;
+      }
+      button {
+        margin-top: 1.5rem;
+        padding: 0.6rem 1.2rem;
+        background: #4099f9;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #217cea;
+      }
+      #msg {
+        margin-top: 1rem;
+        color: gray;
+        font-style: italic;
+      }
+      .note {
+        margin-top: 1rem;
+        font-size: 0.95rem;
+        color: gray;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Uplata listića</h2>
+      <br />
+      <% if (round && round.active) { %>
+      <label>
+        Broj osobne iskaznice ili putovnice (duljina do 20 znakova):
+        <input id="nid" type="text" />
+      </label>
+      <br />
+      <label>
+        Brojevi (6-10 različitih brojeva u rasponu od 1 do 45, međusobno
+        odvojenih zarezom):
+        <input id="nums" type="text" />
+      </label>
+      <button id="buy">Pošalji uplatu i preuzmi QR kod</button>
+      <div id="msg"></div>
+      <% } else { %>
+      <p>Nema aktivnog kola!</p>
+      <% } %>
+    </div>
+    <script>
+      const buyBtn = document.getElementById("buy");
+      if (buyBtn) {
+        buyBtn.onclick = async () => {
+          const nid = document.getElementById("nid").value.trim();
+          const nums = document
+            .getElementById("nums")
+            .value.split(",")
+            .map((s) => parseInt(s.trim()))
+            .filter(Boolean);
+          const msg = document.getElementById("msg");
+          msg.textContent = "";
+          try {
+            const res = await fetch("/ticket", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ national_id: nid, numbers: nums }),
+            });
+            if (!res.ok) {
+              const txt = await res.text();
+              msg.textContent = txt;
+              return;
+            }
+            const blob = await res.blob();
+            const url = URL.createObjectURL(blob);
+            window.open(url);
+            msg.textContent = "QR kod otvoren u novom tabu!";
+          } catch (err) {
+            msg.textContent = "Greška: " + err.message;
+          }
+        };
+      }
+    </script>
+  </body>
+</html>

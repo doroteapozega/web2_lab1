@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="hr">
+  <head>
+    <meta charset="utf-8" />
+    <title>LOTO - Početna</title>
+    <style>
+      body {
+        background: #ccd6ff;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        width: 80%;
+        max-width: 700px;
+        margin: 2rem auto;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+      }
+      h1 {
+        color: #a0036e;
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+        letter-spacing: 1px;
+      }
+      p {
+        margin: 0.8rem 0;
+        line-height: 1.5;
+      }
+      strong {
+        color: black;
+      }
+      hr {
+        border: none;
+        border-top: 2px dashed #ccd6ff;
+        margin: 1.5rem 0;
+        width: 80%;
+      }
+      a.button {
+        display: inline-block;
+        padding: 0.6rem 1.2rem;
+        background: #4099f9;
+        color: white;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 15px;
+      }
+      a.button:hover {
+        background: #217cea;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>LOTO 6/45</h1>
+      <% if (user) { %>
+      <p>
+        Prijavljeni ste kao: <strong><%= user.name || user.email %></strong> -
+        <a href="/logout">Odjava</a>
+      </p>
+      <% } else { %>
+      <p>Da biste zaigrali loto prijavite se! - <a href="/login">Prijava</a></p>
+      <% } %>
+      <hr />
+      <p>
+        <strong>Broj uplaćenih listića u trenutnom kolu:</strong>
+        <% if (currentRound && ticketsCount !== null) { %> <%= ticketsCount %>
+        <% } else { %>
+        <em>-</em>
+        <% } %>
+      </p>
+      <p>
+        <strong>Izvučeni brojevi za trenutno kolo:</strong>
+        <% if (currentRound && currentRound.numbers) { %> <%=
+        currentRound.numbers.join(', ') %> <% } else { %>
+        <em>-</em>
+        <% } %>
+      </p>
+      <% if (user) { %> <% if (currentRound && currentRound.active) { %>
+      <p><a href="/buy" class="button">Uplati listić</a></p>
+      <% } %> <% } %>
+    </div>
+  </body>
+</html>

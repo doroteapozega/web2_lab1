@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="hr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>LOTO Listić <%= ticket.id %></title>
+    <style>
+      body {
+        background: #ccd6ff;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        width: 80%;
+        max-width: 700px;
+        margin: 2rem auto;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+      }
+      h2 {
+        margin: 0.5rem 0 1rem 0;
+        color: #a0036e;
+      }
+      p {
+        margin: 0.8rem 0;
+        line-height: 1.5;
+        font-size: 1.2rem;
+      }
+      strong {
+        color: black;
+      }
+      hr {
+        border: none;
+        border-top: 2px dashed #ccd6ff;
+        margin: 1.5rem 0;
+        width: 80%;
+      }
+      .numbers {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+      }
+      .result {
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 2px dashed #ccd6ff;
+        width: 80%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Listić ID: <%= ticket.id %></h2>
+      <p><strong>ID korisnika:</strong> <%= ticket.national_id %></p>
+      <hr />
+      <div class="numbers">
+        <strong>Tvoji brojevi:</strong>
+        <br />
+        <br />
+        <%= ticket.numbers.join(', ') %>
+      </div>
+      <div class="result">
+        <% if (round && round.numbers) { %>
+        <h3>Izvučeni brojevi:</h3>
+        <p><%= round.numbers.join(', ') %></p>
+        <% } else if (round && round.active) { %>
+        <p>-</p>
+        <% } else { %>
+        <p>-</p>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>
