@@ -1,3 +1,10 @@
+// napomena: nisam sigurna gdje ovo navesti pa navodim ovdje, koristila sam se ChatGPT-om kada bih negdje zapela,
+// npr. navela sam bas za qr kod jer sam ga tu najvise koristila, ali isto tako ako bi mi se izbacivala neka greska,
+// poslala bi ChatGPT-u prompt da mi pomogne sa time (zato svugdje imam ovaj console.error(err) jer nisam mogla skuzit
+// di je problem bio pa mi je on preporucio da to svugdje dodam), ili bih guglala ili pogledala youtube tutorial,
+// isto to bih napravila ako bi se susrela s necim sto do sada nisam radila i sto ne znam pa bi opet ili
+// potrazila na internetu ili pitala AI da mi objasni sto je to i kako se implementira (npr. taj qr, i ovaj m2m isto)
+
 // import potrebnih paketa
 const dotenv = require("dotenv");
 const { v4: uuidv4 } = require("uuid");
